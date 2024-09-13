@@ -1,5 +1,7 @@
 package org.launchcode;
 
+import java.util.Objects;
+
 public class Teacher {
     private String firstName;
     private String lastName;
@@ -13,6 +15,7 @@ public class Teacher {
         this.yearsTeaching = yearsTeaching;
     }
 
+    // Setters
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -29,6 +32,7 @@ public class Teacher {
         this.yearsTeaching = yearsTeaching;
     }
 
+    // Getters
     public String getFirstName() {
         return firstName;
     }
@@ -43,5 +47,26 @@ public class Teacher {
 
     public int getYearsTeaching() {
         return yearsTeaching;
+    }
+
+    // Custom toString method
+    @Override
+    public String toString() {
+        return firstName + " " + lastName + " teaches " + subject + " and has " + yearsTeaching + " years of experience.";
+    }
+
+    // Custom equals method
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || getClass() != obj.getClass()) return false;
+        Teacher teacher = (Teacher) obj;
+        return firstName.equals(teacher.firstName) && lastName.equals(teacher.lastName);
+    }
+
+    // Custom hashCode method (optional, but useful)
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName);
     }
 }
