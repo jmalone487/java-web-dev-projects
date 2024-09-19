@@ -19,7 +19,25 @@ public class Main {
         // Create the menu
         Menu menu = new Menu(menuItems);
 
-        // Print the menu
-        System.out.println(menu);
+        // Print the entire menu
+        System.out.println("Printing the entire menu:");
+        menu.printMenu();
+
+        // Print a single menu item
+        System.out.println("\nPrinting a single menu item (Fluffy Pancakes):");
+        menu.printItem("Fluffy Pancakes");
+
+        // Try to add a duplicate item
+        System.out.println("\nTrying to add a duplicate item (Cheeseburger with Fries):");
+        menu.addItem(burger);
+
+        // Add a new item and print the menu again
+        MenuItem salad = new MenuItem(7.50, "Caesar Salad", "Appetizer", true);
+        System.out.println("\nAdding a new item (Caesar Salad) to the menu:");
+        menu.addItem(salad);
+
+        // Print the updated menu
+        System.out.println("\nPrinting the updated menu:");
+        menu.printMenu();
     }
 }
