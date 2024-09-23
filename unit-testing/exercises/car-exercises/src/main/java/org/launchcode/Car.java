@@ -1,87 +1,67 @@
 package org.launchcode;
 
 public class Car {
+
     private String make;
     private String model;
-    private int gasTankSize;
     private double gasTankLevel;
+    private double gasTankSize;
     private double milesPerGallon;
-    private double odometer = 0;
 
-    public Car(String make, String model, int gasTankSize, double milesPerGallon) {
+    // Constructor
+    public Car(String make, String model, double gasTankSize, double milesPerGallon) {
         this.make = make;
         this.model = model;
         this.gasTankSize = gasTankSize;
-        // Gas tank level defaults to a full tank
-        this.gasTankLevel = gasTankSize;
+        this.gasTankLevel = gasTankSize;  // Assume the tank is full when a new car is created
         this.milesPerGallon = milesPerGallon;
     }
 
-    public String getMake() {
-        return make;
+    // Drive method reduces gasTankLevel based on miles driven
+    public void drive(double miles) {
+        double gasUsed = miles / milesPerGallon;
+        if (gasUsed > gasTankLevel) {
+            gasTankLevel = 0;  // If gas is insufficient for the miles, set gasTankLevel to 0
+        } else {
+            gasTankLevel -= gasUsed;
+        }
     }
 
-    public void setMake(String make) {
-        this.make = make;
+    // Add gas method, throws exception if adding gas exceeds the tank size
+    public void addGas(double gas) {
+        if (gas + this.gasTankLevel > this.gasTankSize) {
+            throw new IllegalArgumentException("Can't exceed tank size");
+        }
+        this.setGasTankLevel(gas + this.gasTankLevel);
     }
 
-    public String getModel() {
-        return model;
+    // Set gas tank level, throws exception if it exceeds the tank size
+    public void setGasTankLevel(double gasTankLevel) {
+        if (gasTankLevel > this.gasTankSize) {
+            throw new IllegalArgumentException("Can't exceed tank size");
+        }
+        this.gasTankLevel = gasTankLevel;
     }
 
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public int getGasTankSize() {
-        return gasTankSize;
-    }
-
-    public void setGasTankSize(int gasTankSize) {
-        this.gasTankSize = gasTankSize;
-    }
-
+    // Getters for gasTankLevel, gasTankSize, and milesPerGallon
     public double getGasTankLevel() {
         return gasTankLevel;
     }
 
-    public void setGasTankLevel(double gasTankLevel) {
-        this.gasTankLevel = gasTankLevel;
+    public double getGasTankSize() {
+        return gasTankSize;
     }
 
     public double getMilesPerGallon() {
         return milesPerGallon;
     }
 
-    public void setMilesPerGallon(double milesPerGallon) {
-        this.milesPerGallon = milesPerGallon;
+    // Getters for make and model
+    public String getMake() {
+        return make;
     }
 
-    public double getOdometer() {
-        return odometer;
+    public String getModel() {
+        return model;
     }
-
-    /**
-     * Drive the car an amount of miles. If not enough fuel, drive as far as fuel allows.
-     * Adjust fuel levels based on amount needed to drive the distance requested.
-     * Add miles to odometer.
-     *
-     * @param miles - the miles to drive
-     */
-    public void drive(double miles)
-    {
-        //adjust fuel based on mpg and miles requested to drive
-        double maxDistance = this.milesPerGallon * this.gasTankLevel;
-        /**the double below uses some syntax called the ternary operator.
-         * if the value of miles is greater than the value of maxDistance,
-         * then milesAbleToTravel = maxDistance.
-         * otherwise, if miles is not greater than maxDistance,
-         * then milesAbleToTravel = miles
-         */
-        double milesAbleToTravel = miles > maxDistance ? maxDistance : miles;
-        double gallonsUsed = milesAbleToTravel / this.milesPerGallon;
-        this.gasTankLevel = this.gasTankLevel - gallonsUsed;
-        this.odometer += milesAbleToTravel;
-    }
-
 }
