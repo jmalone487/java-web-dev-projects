@@ -3,32 +3,23 @@ package org.launchcode;
 import java.util.Objects;
 
 public class Teacher {
-    private String firstName;
-    private String lastName;
-    private String subject;
+    private final String firstName;
+    private final String lastName;
+    private final String subject;
     private int yearsTeaching;
 
     public Teacher(String firstName, String lastName, String subject, int yearsTeaching) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.subject = subject;
-        this.yearsTeaching = yearsTeaching;
+        setYearsTeaching(yearsTeaching); // Use setter for validation
     }
 
     // Setters
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
-    }
-
     public void setYearsTeaching(int yearsTeaching) {
+        if (yearsTeaching < 0) {
+            throw new IllegalArgumentException("Years of teaching cannot be negative.");
+        }
         this.yearsTeaching = yearsTeaching;
     }
 
@@ -52,7 +43,7 @@ public class Teacher {
     // Custom toString method
     @Override
     public String toString() {
-        return firstName + " " + lastName + " teaches " + subject + " and has " + yearsTeaching + " years of experience.";
+        return String.format("%s %s teaches %s and has %d years of experience.", firstName, lastName, subject, yearsTeaching);
     }
 
     // Custom equals method
@@ -64,7 +55,7 @@ public class Teacher {
         return firstName.equals(teacher.firstName) && lastName.equals(teacher.lastName);
     }
 
-    // Custom hashCode method (optional, but useful)
+    // Custom hashCode method
     @Override
     public int hashCode() {
         return Objects.hash(firstName, lastName);

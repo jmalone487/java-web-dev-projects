@@ -1,6 +1,7 @@
-package exercises.classespart1;
+package exercises.classespartone;
 
 import exercises.classespart2.Teacher;
+import exercises.classespart2.Student;
 import java.util.ArrayList;
 
 public class Course {
@@ -8,14 +9,12 @@ public class Course {
     private Teacher instructor;
     private ArrayList<Student> enrolledStudents;
 
-    // Constructor
     public Course(String topic, Teacher instructor) {
         this.topic = topic;
         this.instructor = instructor;
         this.enrolledStudents = new ArrayList<>();
     }
 
-    // Getters
     public String getTopic() {
         return topic;
     }
@@ -28,23 +27,25 @@ public class Course {
         return enrolledStudents;
     }
 
-    // Setters
-    public void setTopic(String topic) {
-        this.topic = topic;
-    }
-
-    public void setInstructor(Teacher instructor) {
-        this.instructor = instructor;
-    }
-
-    // Methods to manage enrolled students
-    public void enrollStudent(Student student) {
+    public void addStudent(Student student) {
         enrolledStudents.add(student);
     }
 
-    public void removeStudent(Student student) {
-        enrolledStudents.remove(student);
+    public double getAverageGrade() {
+        if (enrolledStudents.isEmpty()) {
+            return 0.0;
+        }
+        double total = 0;
+        for (Student student : enrolledStudents) {
+            total += student.getGrade();
+        }
+        return total / enrolledStudents.size();
     }
 
-    // You can add more methods if needed for managing students, like listing them
+    public void displayCourseInfo() {
+        System.out.println("Course Topic: " + topic);
+        System.out.println("Instructor: " + instructor.getName());
+        System.out.println("Number of Students Enrolled: " + enrolledStudents.size());
+    }
 }
+
